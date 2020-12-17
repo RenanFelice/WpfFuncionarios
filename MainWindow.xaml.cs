@@ -21,12 +21,11 @@ namespace Funcionarios
     /// </summary>
     public partial class MainWindow : Window
     {
-        FuncionariosViewModel ViewModel;
         public MainWindow()
         {
             InitializeComponent();
-            ViewModel = new FuncionariosViewModel();
-            this.DataContext = ViewModel;
+             
+            this.DataContext = new FuncionariosViewModel();
         }
     }
 }

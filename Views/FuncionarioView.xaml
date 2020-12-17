@@ -50,49 +50,53 @@
                  Margin="5"
                    Grid.Row="1"
                    Grid.Column="1"
+                    Text="{Binding Path=FuncionarioAtual.Id}"
                    />
         <TextBox x:Name="txtName"
                     Margin="5"
                    Grid.Row="2"
                    Grid.Column="1"
+                 Text="{Binding Path=FuncionarioAtual.Name}"
                    />
         <TextBox x:Name="txtAge"
                     Margin="5"
                    Grid.Row="3"
                    Grid.Column="1"
+                 Text="{Binding Path=FuncionarioAtual.Age}"
                    />
 
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Center"
                     Grid.Row="4"
                     Grid.Column="1">
-            <Button x:Name="btnAdd" Content="Adicionar"/>
+            <Button x:Name="btnAdd" Content="Adicionar" Command="{Binding Path=SaveCommand}"/>
             <Button Margin="5 0 0 0" x:Name="btnSearch" Content="Procurar"/>
             <Button Margin="5 0 0 0" x:Name="btnUpdate" Content="Update"/>
             <Button Margin="5 0 0 0" x:Name="btnDelete" Content="Deletar"/>
         </StackPanel>
         <TextBlock x:Name="txtBlockMessage" Grid.Row="5"
+                   Text="{Binding Path=Message}"
                    Grid.Column="1"/>
         <DataGrid Height="200" Name="dgFuncionarios"
                   AutoGenerateColumns="False"
                   Grid.Row="6"
                   Grid.Column="1" Margin="5,8" Padding="3"
-                  ItemsSource="{Binding Path=ListaFuncionarios}">
+                  ItemsSource="{Binding Path=ListaFuncionarios, Mode=TwoWay}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Header="Id Funcionario"
                     Width="auto"
-                    Binding="{Binding Path=Id}"
+                    Binding="{Binding Path=Id, Mode=TwoWay}"
                     />
                 <DataGridTextColumn
                     Header="Nome Funcionario"
                     Width="auto"
-                    Binding="{Binding Path=Name}"
+                    Binding="{Binding Path=Name, Mode=TwoWay}"
                     />
                 <DataGridTextColumn
                     Header="Idade Funcionario"
                     Width="auto"
-                    Binding="{Binding Path=Age}"
+                    Binding="{Binding Path=Age, Mode=TwoWay}"
                     />
             </DataGrid.Columns>
          </DataGrid>

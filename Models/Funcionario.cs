@@ -10,6 +10,7 @@ namespace Funcionarios.Models
 {
     public class Funcionario : INotifyPropertyChanged
     {
+        #region INotifyPropertyChangedImplementation
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
@@ -18,6 +19,7 @@ namespace Funcionarios.Models
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        #endregion
 
         private int id;
         public int Id

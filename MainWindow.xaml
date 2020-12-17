@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Funcionarios"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="500" xmlns:fncvw="clr-namespace:Funcionarios.Views">
+        Title="MainWindow" Height="500" Width="600" xmlns:fncvw="clr-namespace:Funcionarios.Views">
     <Grid>
         <fncvw:FuncionarioView></fncvw:FuncionarioView>
     </Grid>

@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace Funcionarios.Models
 {
     public class FuncionariosFakeData
     {
-        private static List<Funcionario> ListaFuncionarios;
+        private static ObservableCollection<Funcionario> ListaFuncionarios;
 
         public FuncionariosFakeData()
         {
-            ListaFuncionarios = new List<Funcionario>()
+            ListaFuncionarios = new ObservableCollection<Funcionario>()
             {
                 new Funcionario{Id = 1, Name = "João", Age = 40 },
                 new Funcionario{Id = 2, Name = "Maria", Age = 50 },
                 new Funcionario{Id = 3, Name = "José", Age = 25 },
                 new Funcionario{Id = 4, Name = "Joaquina", Age = 33 },
+
             };
         }
-        public List<Funcionario> GetFuncionarios()
+        public ObservableCollection<Funcionario> GetFuncionarios()
         {
             return ListaFuncionarios;
         }
