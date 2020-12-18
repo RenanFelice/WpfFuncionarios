@@ -18,7 +18,7 @@ namespace Funcionarios.ViewModels
         public FuncionariosViewModel()
         {
             FuncionariosObj = new FuncionariosFakeData();
-            CarregaLista();
+
             FuncionarioAtual = new Funcionario();
             saveCommand = new RelayCommand(Save);
             searchCommand = new RelayCommand(Search);
@@ -27,7 +27,7 @@ namespace Funcionarios.ViewModels
 
         }
 
-       private ObservableCollection<Funcionario> listaFuncionarios = new ObservableCollection<Funcionario>();
+        private ObservableCollection<Funcionario> listaFuncionarios = new ObservableCollection<Funcionario>();
         public ObservableCollection<Funcionario> ListaFuncionarios
         {
             get {
@@ -35,21 +35,16 @@ namespace Funcionarios.ViewModels
                 listaFuncionarios = FuncionariosObj.GetFuncionarios();
                 return listaFuncionarios; 
             }
-            //set { listaFuncionarios = value; }
-
         }
 
-        private void CarregaLista()
-        {
-            //ListaFuncionarios = new ObservableCollection<Funcionario>(FuncionariosObj.GetFuncionarios());
-        }
+    
 
 
         private Funcionario funcionarioAtual;
         public Funcionario FuncionarioAtual
         {
             get { return funcionarioAtual; }
-            set { funcionarioAtual = value; Notifica("FuncionarioAtual"); }
+            set { funcionarioAtual = value; }
         }
 
         private string message;
@@ -72,8 +67,7 @@ namespace Funcionarios.ViewModels
             try
             {
                 Funcionario newFunc = new Funcionario() { Id = FuncionarioAtual.Id, Age = FuncionarioAtual.Age, Name = funcionarioAtual.Name };
-                ObservableCollection<Funcionario> _ListaFuncionarios = FuncionariosObj.GetFuncionarios();
-                _ListaFuncionarios.Add(newFunc);
+                FuncionariosObj.AddFuncionario(newFunc);
 
             }
             catch (Exception ex)
@@ -136,7 +130,6 @@ namespace Funcionarios.ViewModels
                 if (isUpdated)
                 {
                     Message = "funcionário atualizado";
-                    CarregaLista();
                 }
                 else
                 {
@@ -145,7 +138,6 @@ namespace Funcionarios.ViewModels
             }
             catch (Exception ex)
             {
-
                 Message = ex.Message;
             }
         }
@@ -155,7 +147,6 @@ namespace Funcionarios.ViewModels
         #region DeleteOperation
 
         private RelayCommand deleteCommand;
-
         public RelayCommand DeleteCommand
         {
             get { return deleteCommand; }
@@ -169,7 +160,6 @@ namespace Funcionarios.ViewModels
                 if (isDeleted)
                 {
                     Message = "funcionário deletado";
-                    CarregaLista();
                 }
                 else
                 {
@@ -178,7 +168,6 @@ namespace Funcionarios.ViewModels
             }
             catch (Exception ex)
             {
-
                 Message = ex.Message;
             }
         }
