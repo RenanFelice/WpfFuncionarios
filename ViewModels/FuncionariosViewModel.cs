@@ -7,49 +7,43 @@ using System.ComponentModel;
 using Funcionarios.Models;
 using Funcionarios.Commands;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 
 namespace Funcionarios.ViewModels
 {
-    public class FuncionariosViewModel : INotifyPropertyChanged, INotifyCollectionChanged
+    public class FuncionariosViewModel : BaseNotifyChanged
     {
-        #region INotifyPropertyChangedImplementation
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
 
-        public event NotifyCollectionChangedEventHandler CollectionChanged;
-        private void RaiseCollectionChanged(NotifyCollectionChangedAction action, object Funcionario)
-        {
-            CollectionChanged?.Invoke(this, new NotifyCollectionChangedEventArgs(action, Funcionario));
-        }
-    
-    #endregion
-
-    FuncionariosFakeData FuncionariosObj;
+        FuncionariosFakeData FuncionariosObj;
         public FuncionariosViewModel()
         {
             FuncionariosObj = new FuncionariosFakeData();
             CarregaLista();
             FuncionarioAtual = new Funcionario();
             saveCommand = new RelayCommand(Save);
-            
+            //searchCommand = new RelayCommand(Search);
+            //updateCommand = new RelayCommand(Update);
+            //deleteCommand = new RelayCommand(Delete);
+
         }
 
-        private ObservableCollection<Funcionario> listaFuncionarios;
-        public ObservableCollection<Funcionario> ListaFuncionarios
+       private List<Funcionario> listaFuncionarios = new List<Funcionario>();
+
+
+        public List<Funcionario> ListaFuncionarios
         {
-            get { return listaFuncionarios; }
-            set { listaFuncionarios = value; OnPropertyChanged("ListaFuncionarios"); }
+
+            get {
+                listaFuncionarios.Clear();
+                listaFuncionarios = FuncionariosObj.GetFuncionarios();
+                return listaFuncionarios; 
+            }
+            //set { listaFuncionarios = value; }
 
         }
 
         private void CarregaLista()
         {
-            ListaFuncionarios = new ObservableCollection<Funcionario>(FuncionariosObj.GetFuncionarios());
+            //ListaFuncionarios = new ObservableCollection<Funcionario>(FuncionariosObj.GetFuncionarios());
         }
 
 
@@ -57,7 +51,7 @@ namespace Funcionarios.ViewModels
         public Funcionario FuncionarioAtual
         {
             get { return funcionarioAtual; }
-            set { funcionarioAtual = value; OnPropertyChanged("FuncionarioAtual"); }
+            set { funcionarioAtual = value; Notifica("FuncionarioAtual"); }
         }
 
         private string message;
@@ -65,7 +59,7 @@ namespace Funcionarios.ViewModels
         public string Message
         {
             get { return message; }
-            set { message = value; OnPropertyChanged("Message");}
+            set { message = value; Notifica("Message");}
         }
 
         #region SaveOperation
@@ -79,10 +73,15 @@ namespace Funcionarios.ViewModels
         {
             try
             {
-                var isSaved = FuncionariosObj.AddFuncionario(FuncionarioAtual);
-                CarregaLista();
-                if (isSaved) Message = "Funcionário Salvo";
-                else Message = "Erro ao salvar funcionário";
+                Funcionario newFunc = new Funcionario() { Id = FuncionarioAtual.Id, Age = FuncionarioAtual.Age, Name = funcionarioAtual.Name };
+                List<Funcionario> _ListaFuncionarios = FuncionariosObj.GetFuncionarios();
+                _ListaFuncionarios.Add(newFunc);
+                this.Notifica("ListaFuncionarios");
+                //var isSaved = FuncionariosObj.AddFuncionario(newFunc);
+                //CarregaLista();
+                //if (isSaved) Message = "Funcionário Salvo";
+                //else Message = "Erro ao salvar funcionário";
+
             }
             catch (Exception ex)
             {
@@ -92,7 +91,103 @@ namespace Funcionarios.ViewModels
         }
         #endregion
 
+        //#region SearchOperation
+        //private RelayCommand searchCommand;
+        //public RelayCommand SearchCommand
+        //{
+        //    get { return searchCommand; }
+        //}
 
 
+        
+        //public void Search()
+        //{
+        //    try
+        //    {
+        //        var funcionarioEncontrado = FuncionariosObj.SearchFuncionario(funcionarioAtual.Id);
+        //        if(funcionarioEncontrado != null)
+        //        {
+
+        //            FuncionarioAtual.Age = funcionarioEncontrado.Age;
+        //            FuncionarioAtual.Id = funcionarioEncontrado.Id;
+        //            FuncionarioAtual.Name = funcionarioEncontrado.Name;
+
+        //        } else
+        //        {
+        //            Message = "funcionário não encontrado";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Message = ex.Message;
+        //    }
+        //}
+        //#endregion
+
+        //#region UpdateOperation
+
+        //private RelayCommand updateCommand;
+
+        //public RelayCommand UpdateCommand
+        //{
+        //    get { return updateCommand; }
+        //    set { updateCommand = value; }
+        //}
+
+        //public void Update()
+        //{
+        //    try
+        //    {
+        //        var isUpdated = FuncionariosObj.UpdateFuncionario(funcionarioAtual);
+        //        if (isUpdated)
+        //        {
+        //            Message = "funcionário atualizado";
+        //            CarregaLista();
+        //        }else
+        //        {
+        //            Message = "Atualização de funcionário falhou";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Message = ex.Message;
+        //    }
+        //}
+
+        //#endregion
+
+        //#region DeleteOperation
+
+        //private RelayCommand deleteCommand;
+
+        //public RelayCommand DeleteCommand
+        //{
+        //    get { return deleteCommand; }
+        //}
+
+        //public void Delete()
+        //{
+        //    try
+        //    {
+        //        var isDeleted = FuncionariosObj.DeleteFuncionario(funcionarioAtual.Id);
+        //        if (isDeleted)
+        //        {
+        //            Message = "funcionário deletado";
+        //            CarregaLista();
+        //        }
+        //        else
+        //        {
+        //            Message = "Delete de funcionário falhou";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        Message = ex.Message;
+        //    }
+        //}
+
+        //#endregion
     }
 }

@@ -69,10 +69,10 @@
                     HorizontalAlignment="Center"
                     Grid.Row="4"
                     Grid.Column="1">
-            <Button x:Name="btnAdd" Content="Adicionar" Command="{Binding Path=SaveCommand}"/>
-            <Button Margin="5 0 0 0" x:Name="btnSearch" Content="Procurar"/>
-            <Button Margin="5 0 0 0" x:Name="btnUpdate" Content="Update"/>
-            <Button Margin="5 0 0 0" x:Name="btnDelete" Content="Deletar"/>
+            <Button Margin="5 0 0 0" Command="{Binding Path=SaveCommand}" Content="Adicionar" />
+            <Button Margin="5 0 0 0" Command="{Binding Path=SearchCommand}" Content="Procurar"/>
+            <Button Margin="5 0 0 0" Command="{Binding Path=UpdateCommand}" Content="Update"/>
+            <Button Margin="5 0 0 0" Command="{Binding Path=DeleteCommand}" Content="Deletar"/>
         </StackPanel>
         <TextBlock x:Name="txtBlockMessage" Grid.Row="5"
                    Text="{Binding Path=Message}"
@@ -81,7 +81,7 @@
                   AutoGenerateColumns="False"
                   Grid.Row="6"
                   Grid.Column="1" Margin="5,8" Padding="3"
-                  ItemsSource="{Binding Path=ListaFuncionarios, Mode=TwoWay}">
+                  ItemsSource="{Binding Path=ListaFuncionarios}">
             <DataGrid.Columns>
                 <DataGridTextColumn
                     Header="Id Funcionario"

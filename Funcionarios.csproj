@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\BaseNotifyChanged.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="ViewModels\FuncionariosViewModel.cs" />
     <Compile Include="Views\FuncionarioView.xaml.cs">
